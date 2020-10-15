@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/MoviesFragment">
+
+    <fragment
+        android:id="@+id/MoviesFragment"
+        android:name="com.accretion.mytaskapp.ui.movies.MoviesFragment"
+        android:label="@string/first_fragment_label"
+        tools:layout="@layout/fragment_movies">
+        <action
+            android:id="@+id/action_MoviesFragment_to_DetailsFragment"
+            app:destination="@id/DetailsFragment" />
+        <action
+            android:id="@+id/action_MoviesFragment_to_searchMoviesFragment"
+            app:destination="@id/searchMoviesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/DetailsFragment"
+        android:name="com.accretion.mytaskapp.ui.movies_details.DetailsFragment"
+        android:label="@string/second_fragment_label"
+        tools:layout="@layout/fragment_details"/>
+    <fragment
+        android:id="@+id/searchMoviesFragment"
+        android:name="com.accretion.mytaskapp.ui.search_movie.SearchMoviesFragment"
+        android:label="fragment_search_movies"
+        tools:layout="@layout/fragment_search_movies" >
+        <action
+            android:id="@+id/action_searchMoviesFragment_to_DetailsFragment"
+            app:destination="@id/DetailsFragment" />
+    </fragment>
+</navigation>
