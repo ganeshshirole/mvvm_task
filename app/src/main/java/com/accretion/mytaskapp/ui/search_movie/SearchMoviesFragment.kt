@@ -11,19 +11,21 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.accretion.mytaskapp.R
 import com.accretion.mytaskapp.modal.search_movie.MovieResult
 import com.accretion.mytaskapp.modal.search_movie.SearchMovieResponse
 import com.accretion.mytaskapp.network.ApiResult
+import com.accretion.mytaskapp.ui.adapter.Callback
 import com.accretion.mytaskapp.ui.adapter.MovieListAdapter
 import java.util.*
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
-class SearchMoviesFragment : Fragment() {
+class SearchMoviesFragment : Fragment(), Callback {
 
     private var placeholder: TextView? = null
 
@@ -84,7 +86,13 @@ class SearchMoviesFragment : Fragment() {
 
         val recyclerViewMovies = view?.findViewById<RecyclerView>(R.id.recyclerViewMovies)
         recyclerViewMovies?.layoutManager = LinearLayoutManager(context)
-        movieListAdapter = MovieListAdapter(this.moviesList)
+        movieListAdapter = MovieListAdapter(this.moviesList, this)
         recyclerViewMovies?.adapter = movieListAdapter
+    }
+
+    override fun onClick(position: Int) {
+        val bundle = Bundle()
+        bundle.putParcelable("movie", moviesList[position])
+        findNavController().navigate(R.id.action_MoviesFragment_to_DetailsFragment, bundle)
     }
 }

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -16,12 +17,13 @@ import com.accretion.mytaskapp.R
 import com.accretion.mytaskapp.modal.now_playing.NowPlayingResponse
 import com.accretion.mytaskapp.modal.search_movie.MovieResult
 import com.accretion.mytaskapp.network.ApiResult
+import com.accretion.mytaskapp.ui.adapter.Callback
 import com.accretion.mytaskapp.ui.adapter.MovieListAdapter
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
-class MoviesFragment : Fragment() {
+class MoviesFragment : Fragment(), Callback {
 
     private lateinit var movieListAdapter: MovieListAdapter
     private var moviesList: ArrayList<MovieResult> = ArrayList()
@@ -53,7 +55,7 @@ class MoviesFragment : Fragment() {
         val recyclerViewMovies = view?.findViewById<RecyclerView>(R.id.recyclerViewMovies)
 
         recyclerViewMovies?.layoutManager = LinearLayoutManager(context)
-        movieListAdapter = MovieListAdapter(this.moviesList)
+        movieListAdapter = MovieListAdapter(this.moviesList, this)
         recyclerViewMovies?.adapter = movieListAdapter
     }
 
@@ -76,5 +78,9 @@ class MoviesFragment : Fragment() {
         viewModel.moviesLiveData.observe(viewLifecycleOwner, observeMovies)
     }
 
-
+    override fun onClick(position: Int) {
+        val bundle = Bundle()
+        bundle.putParcelable("movie", moviesList[position])
+        findNavController().navigate(R.id.action_MoviesFragment_to_DetailsFragment, bundle)
+    }
 }

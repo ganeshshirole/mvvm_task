@@ -21,7 +21,11 @@
         android:id="@+id/DetailsFragment"
         android:name="com.accretion.mytaskapp.ui.movies_details.DetailsFragment"
         android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_details"/>
+        tools:layout="@layout/fragment_details">
+        <argument
+            android:name="movieData"
+            app:argType="com.accretion.mytaskapp.modal.search_movie.MovieResult[]" />
+    </fragment>
     <fragment
         android:id="@+id/searchMoviesFragment"
         android:name="com.accretion.mytaskapp.ui.search_movie.SearchMoviesFragment"
